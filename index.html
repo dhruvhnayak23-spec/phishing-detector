@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PhishGuard — URL Threat Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Animated background grid -->
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <div class="wrapper">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <span class="logo-icon">⬡</span>
+        <span class="logo-text">PhishGuard</span>
+      </div>
+      <p class="tagline">Real-time phishing URL detection engine</p>
+    </header>
+
+    <!-- Input section -->
+    <section class="input-section">
+      <div class="input-card">
+        <label class="input-label">Enter a URL to analyze</label>
+        <div class="input-row">
+          <div class="input-wrap">
+            <span class="input-prefix">🔗</span>
+            <input
+              type="text"
+              id="urlInput"
+              class="url-input"
+              placeholder="https://example.com"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+          <button id="analyzeBtn" class="analyze-btn">
+            <span class="btn-text">Scan URL</span>
+            <span class="btn-arrow">→</span>
+          </button>
+        </div>
+        <div class="quick-tests">
+          <span class="qt-label">Try:</span>
+          <button class="qt-chip" data-url="https://google.com">google.com</button>
+          <button class="qt-chip" data-url="http://paypal-secure-login.verify.com/account">fake-paypal</button>
+          <button class="qt-chip" data-url="http://192.168.1.1/login">IP login</button>
+          <button class="qt-chip" data-url="https://facebook.com">facebook.com</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Loading state -->
+    <div id="loadingState" class="loading-state hidden">
+      <div class="scanner">
+        <div class="scanner-bar"></div>
+      </div>
+      <p class="loading-text">Analyzing URL structure...</p>
+    </div>
+
+    <!-- Results section -->
+    <section id="resultsSection" class="results-section hidden">
+
+      <!-- Verdict banner -->
+      <div id="verdictBanner" class="verdict-banner">
+        <div class="verdict-left">
+          <span id="verdictEmoji" class="verdict-emoji"></span>
+          <div>
+            <p class="verdict-label-small">VERDICT</p>
+            <p id="verdictLabel" class="verdict-label-big"></p>
+          </div>
+        </div>
+        <div class="verdict-score-wrap">
+          <svg class="score-ring" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" class="ring-bg"/>
+            <circle id="scoreArc" cx="40" cy="40" r="32" class="ring-fill"/>
+          </svg>
+          <span id="scoreNumber" class="score-number"></span>
+          <span class="score-label">/ 100</span>
+        </div>
+      </div>
+
+      <!-- Domain info row -->
+      <div class="info-grid">
+        <div class="info-card">
+          <p class="info-card-label">Domain</p>
+          <p id="infoDomain" class="info-card-value mono"></p>
+        </div>
+        <div class="info-card">
+          <p class="info-card-label">Protocol</p>
+          <p id="infoProtocol" class="info-card-value mono"></p>
+        </div>
+        <div class="info-card">
+          <p class="info-card-label">URL Length</p>
+          <p id="infoLength" class="info-card-value mono"></p>
+        </div>
+      </div>
+
+      <!-- Flags -->
+      <div class="flags-section">
+        <h3 class="section-title">Analysis Flags</h3>
+        <div id="flagsList" class="flags-list"></div>
+      </div>
+
+      <!-- Detail table -->
+      <div class="detail-section">
+        <h3 class="section-title">Feature Breakdown</h3>
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th>Feature</th>
+              <th>Value</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="detailsBody"></tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </div>
+
+  <footer class="footer">
+    <p>PhishGuard — Cybersecurity Internship Project &nbsp;|&nbsp; Built with Python + Flask</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>
